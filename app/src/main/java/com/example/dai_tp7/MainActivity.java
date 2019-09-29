@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
         MiJuego juegoquerido;
-        juegoquerido=new MiJuego(VistaPrincipal);
+        juegoquerido=new MiJuego(VistaPrincipal,this);
         juegoquerido.ComenzarJuego();
     }
 }

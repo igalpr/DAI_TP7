@@ -1,5 +1,8 @@
 package com.example.dai_tp7;
 
+import android.content.Context;
+import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import org.cocos2d.actions.interval.MoveTo;
@@ -14,17 +17,20 @@ import org.cocos2d.types.CCSize;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 public class MiJuego {
     CCGLSurfaceView _VistaJuego;
     CCSize _Pantalla;
     //Sprite _Jugador;
     ArrayList _listaJugadores;
+    Context _ContextoJuego;
 
-    public MiJuego(CCGLSurfaceView Vista)
+    public MiJuego(CCGLSurfaceView Vista,Context contexto)
     {
         Log.d("MiJuego","Comenzar el constructor");
         _VistaJuego=Vista;
+        _ContextoJuego=contexto;
     }
     public void ComenzarJuego(){
         Log.d("Comenzar","Comenzar el juego");
@@ -33,11 +39,23 @@ public class MiJuego {
         _Pantalla=Director.sharedDirector().displaySize();
         Log.d("Comenzar","Pantalla Ancho: "+_Pantalla.width +" - Alto:"+_Pantalla.getHeight());
 
+        Log.d("Comenzar","Le digo que ponga la musica de fondo");
+        PonerMusica();
+
         Log.d("Comenzar","Declaro e instancio la escena");
         Scene EscenaAUsar=ComienzoEscena();
 
         Log.d("Comenzar","Le digo al director que inicie la escena");
         Director.sharedDirector().runWithScene(EscenaAUsar);
+    }
+    private void PonerMusica()
+    {
+        Log.d("PonerMusica","Arranco la musica de fondo");
+        MediaPlayer ReproductorDeMusica;
+        ReproductorDeMusica= MediaPlayer.create(_ContextoJuego,R.raw.presidencial);
+        ReproductorDeMusica.start();
+        ReproductorDeMusica.setVolume(0.5f,0.5f);
+        ReproductorDeMusica.setLooping(true);
     }
     private Scene ComienzoEscena()
     {
@@ -73,7 +91,7 @@ public class MiJuego {
 
             Log.d("PonerJugador","Le asigno la imagen al jugador");
             Sprite Jugador;
-            Jugador=Sprite.sprite("peron.jpg");
+            Jugador=Sprite.sprite("trump.png");
 
             Log.d("PonerJugador","Calculo posiciones random");
             Random random=new Random();
